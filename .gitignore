@@ -1,0 +1,6 @@
+/target
+**/*.rs.bk
+examples/test.rs
+input/*
+!input/day01.txt
+.idea/
