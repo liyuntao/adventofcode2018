@@ -1,6 +1,6 @@
 ## Examples of how to use aoc2018
 
-This directory contains a number of examples showcasing the solutions of adventofcode2018.
+This directory contains a number of examples showcasing the solutions of [Advent Of Code 2018](https://adventofcode.com/2018).
 
 All solutions can be executed with:
 
