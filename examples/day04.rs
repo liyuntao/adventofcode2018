@@ -42,7 +42,7 @@ fn parse(s: &str) -> Record {
 fn handle_solution(vec: Vec<String>) {
     let mut records = vec
         .iter()
-        .map(|input| parse(&input))
+        .map(|ref input| parse(&input))
         .collect::<Vec<Record>>();
     records.sort_by(|ref a, ref b| a.datetime.cmp(&b.datetime));
     //    records.iter().for_each(|rec| println!("debug {:?}", rec));

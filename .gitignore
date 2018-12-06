@@ -4,3 +4,4 @@ examples/test.rs
 input/*
 !input/day01.txt
 .idea/
+.DS_Store

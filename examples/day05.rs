@@ -44,11 +44,13 @@ fn react_with_ignore(input: &str, ignored_char: char) -> usize {
 }
 
 fn main() {
-    let path = format!("./input/{}", "day05.txt");
-
-    let mut file = File::open(path).unwrap();
-    let mut input = String::new();
-    file.read_to_string(&mut input).unwrap();
+    let input = {
+        let mut input = String::new();
+        let path = format!("./input/{}", "day05.txt");
+        let mut file = File::open(path).unwrap();
+        file.read_to_string(&mut input).unwrap();
+        input
+    };
 
     // q1
     println!("result of q01 is {}", react(&input));

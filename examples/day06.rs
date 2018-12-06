@@ -49,10 +49,10 @@ fn main() {
                 .iter()
                 .map(|dot| dot.manhattan_distance(i, j))
                 .collect();
-            let min_dis = *manh_dis_vec.iter().min().unwrap();
+            let min_dis = manh_dis_vec.iter().min().unwrap().clone();
             if manh_dis_vec
                 .iter()
-                .filter(|&&distance| distance == min_dis)
+                .filter(|&distance| *distance == min_dis)
                 .count()
                 == 1
             {
@@ -72,7 +72,7 @@ fn main() {
     println!(
         "result of q01 is {}",
         dots.iter()
-            .filter(|dot| !dot.reach_infinite)
+            .filter(|&dot| !dot.reach_infinite)
             .map(|dot| dot.area_counter)
             .max()
             .unwrap()
@@ -82,7 +82,12 @@ fn main() {
     let mut q2_counter = 0;
     for i in min_x..=max_x {
         for j in min_y..=max_y {
-            if dots.iter().map(|dot| dot.manhattan_distance(i, j)).sum::<i32>() < 10000 {
+            if dots
+                .iter()
+                .map(|dot| dot.manhattan_distance(i, j))
+                .sum::<i32>()
+                < 10000
+            {
                 q2_counter += 1;
             }
         }
