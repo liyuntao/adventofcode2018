@@ -13,12 +13,11 @@ fn parse_count(s: &str) -> (i32, i32) {
     return (has_two, has_three);
 }
 
-fn valid_str(a: &str, b: &str) -> Option<usize> {
+fn valid_str(a: &str, b: &str) -> Option<usize /*index of different char*/> {
     let mut pos = 0;
-    let mut counter = 0;
-    let size = a.len();
-    for i in 0..(size - 1) {
-        if counter > 1 {
+    let mut differ_count = 0;
+    for i in 0..a.len() {
+        if differ_count > 1 {
             return None;
         }
 
@@ -27,12 +26,10 @@ fn valid_str(a: &str, b: &str) -> Option<usize> {
 
         if c1 != c2 {
             pos = i;
-            counter += 1;
+            differ_count += 1;
         }
     }
-
     println!("debug {}  {} pos={}", a, b, pos);
-
     Some(pos)
 }
 
@@ -53,7 +50,7 @@ fn main() {
 
     // q2
     let size = vec.len();
-    for i in 0..size {
+    for i in 0..size - 1 {
         for j in i + 1..size {
             if let Some(pos) = valid_str(&vec[i], &vec[j]) {
                 let s = &vec[i];
