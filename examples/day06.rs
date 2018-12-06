@@ -77,4 +77,15 @@ fn main() {
             .max()
             .unwrap()
     );
+
+    // q2
+    let mut q2_counter = 0;
+    for i in min_x..=max_x {
+        for j in min_y..=max_y {
+            if dots.iter().map(|dot| dot.manhattan_distance(i, j)).sum::<i32>() < 10000 {
+                q2_counter += 1;
+            }
+        }
+    }
+    println!("result of q02 is {}", q2_counter);
 }
