@@ -140,6 +140,5 @@ fn main() {
         .map(|l| l.expect("Could not parse line"))
         .collect();
 
-    // q1
     handle_solution(vec);
 }
