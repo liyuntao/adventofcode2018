@@ -53,7 +53,7 @@ fn gen_date_mark(dt: DateTime<Utc>) -> String {
     dt.format("%m-%d").to_string()
 }
 
-fn handle_q1(vec: Vec<String>) {
+fn handle_solution(vec: Vec<String>) {
     let mut records = vec
         .iter()
         .map(|input| parse(&input))
@@ -92,16 +92,17 @@ fn handle_q1(vec: Vec<String>) {
         }
     });
 
+    // q1
     let max_k_v = total_sleep_minutes_counter
         .iter()
         .max_by(|&a, &b| a.1.cmp(b.1))
         .unwrap();
-    println!("{}: \"{}\"", max_k_v.0, max_k_v.1);
-    println!("{:?}", sleep_moments_marker[max_k_v.0]);
-    println!(
-        "max counts fallasleep {}",
-        sleep_moments_marker[max_k_v.0].iter().max().unwrap()
-    );
+//    println!("{}: \"{}\"", max_k_v.0, max_k_v.1);
+//    println!("{:?}", sleep_moments_marker[max_k_v.0]);
+//    println!(
+//        "max counts fallasleep {}",
+//        sleep_moments_marker[max_k_v.0].iter().max().unwrap()
+//    );
 
     let id_i32 = max_k_v.0[1..].parse::<i32>().unwrap();
     let max_minutes = *sleep_moments_marker[max_k_v.0].iter().max().unwrap();
@@ -111,6 +112,24 @@ fn handle_q1(vec: Vec<String>) {
         .unwrap() as i32;
 
     println!("result of q01 is {}", id_i32 * max_moment_i32);
+
+    // q2
+    let max_tuple = sleep_moments_marker
+        .iter()
+        .map(|t| (t.0, t.1.iter().max().unwrap()))
+        .max_by(|&t1, &t2| t1.1.cmp(t2.1))
+        .unwrap();
+    println!("{}: \"{}\"", max_tuple.0, max_tuple.1);
+    println!("{:?}", sleep_moments_marker[max_tuple.0]);
+
+    let id02_i32 = max_tuple.0[1..].parse::<i32>().unwrap();
+    let max_minutes = *max_tuple.1;
+    let max_moment02_i32 = sleep_moments_marker[max_tuple.0]
+        .iter()
+        .position(|&r| r == max_minutes)
+        .unwrap() as i32;
+
+    println!("result of q02 is {}", id02_i32 * max_moment02_i32);
 }
 
 fn main() {
@@ -122,5 +141,5 @@ fn main() {
         .collect();
 
     // q1
-    handle_q1(vec);
+    handle_solution(vec);
 }
