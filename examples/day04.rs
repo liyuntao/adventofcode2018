@@ -1,7 +1,6 @@
 extern crate chrono;
 
 use chrono::DateTime;
-use chrono::Duration;
 use chrono::Utc;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
@@ -18,7 +17,6 @@ enum StateChange {
 
 #[derive(Debug)]
 struct Record {
-    date_mark: String,
     datetime: DateTime<Utc>, // basically for sorting
     state: StateChange,
 }
@@ -38,19 +36,7 @@ fn parse(s: &str) -> Record {
     Record {
         datetime: dt,
         state: state,
-        date_mark: gen_date_mark(dt),
     }
-}
-
-// if starts with 23:xx, make the date_mark to the next-day
-fn gen_date_mark(dt: DateTime<Utc>) -> String {
-    let dt = if dt.hour() == 23 {
-        dt.clone() + Duration::days(1)
-    } else {
-        dt
-    };
-
-    dt.format("%m-%d").to_string()
 }
 
 fn handle_solution(vec: Vec<String>) {
