@@ -1,4 +1,4 @@
-## Examples of how to use aoc2018
+## Examples of how to use adventofcode2018
 
 This directory contains a number of examples showcasing the solutions of [Advent Of Code 2018](https://adventofcode.com/2018).
 

@@ -9,7 +9,7 @@ use std::io::{BufRead, BufReader};
 use chrono::prelude::*;
 use std::collections::HashMap;
 
-#[derive(Debug, PartialEq, Eq, PartialOrd, Ord)]
+#[derive(Debug)]
 enum StateChange {
     BeginShift(String /*ID*/),
     FallAsleep(u32 /* moment 0-59 */),
@@ -97,12 +97,12 @@ fn handle_solution(vec: Vec<String>) {
         .iter()
         .max_by(|&a, &b| a.1.cmp(b.1))
         .unwrap();
-//    println!("{}: \"{}\"", max_k_v.0, max_k_v.1);
-//    println!("{:?}", sleep_moments_marker[max_k_v.0]);
-//    println!(
-//        "max counts fallasleep {}",
-//        sleep_moments_marker[max_k_v.0].iter().max().unwrap()
-//    );
+    println!("{}: \"{}\"", max_k_v.0, max_k_v.1);
+    println!("{:?}", sleep_moments_marker[max_k_v.0]);
+    println!(
+        "max counts fallasleep {}",
+        sleep_moments_marker[max_k_v.0].iter().max().unwrap()
+    );
 
     let id_i32 = max_k_v.0[1..].parse::<i32>().unwrap();
     let max_minutes = *sleep_moments_marker[max_k_v.0].iter().max().unwrap();
