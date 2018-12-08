@@ -47,10 +47,8 @@ fn handle_solution(vec: Vec<String>) {
     records.sort_by(|ref a, ref b| a.datetime.cmp(&b.datetime));
     //    records.iter().for_each(|rec| println!("debug {:?}", rec));
 
-    let mut total_sleep_minutes_counter: HashMap<
-        String, /*ID*/
-        u32,    /*total minutes*/
-    > = HashMap::new();
+    let mut total_sleep_minutes_counter: HashMap<String /*ID*/, u32 /*total minutes*/> =
+        HashMap::new();
     let mut sleep_moments_marker: HashMap<
         String,   /*ID*/
         Vec<u32>, /*moment fallasleep counter*/
