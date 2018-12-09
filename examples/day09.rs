@@ -55,4 +55,6 @@ fn main() {
 
     let res_q1 = solution(players, last_marble);
     println!("result of q01 is {}", res_q1);
+
+    // TODO q2 may need LinkedList with cursor implemented...
 }
