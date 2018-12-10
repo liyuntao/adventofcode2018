@@ -21,7 +21,7 @@ impl Node {
     }
 }
 
-fn parse(input: &str) -> Node {
+fn parse_input(input: &str) -> Node {
     lazy_static! {
         static ref RE: Regex = Regex::new(
             r"position=<\s*([-]?\d+),\s*([-]?\d+)> velocity=<\s*([-]?\d+),\s*([-]?\d+)>"
@@ -37,16 +37,7 @@ fn parse(input: &str) -> Node {
     Node { x, y, vx, vy }
 }
 
-fn main() {
-    let path = format!("./input/{}", "day10.txt");
-
-    let vec: Vec<String> = BufReader::new(File::open(path).unwrap())
-        .lines()
-        .map(|l| l.expect("Could not parse line"))
-        .collect();
-
-    let mut nodes: Vec<Node> = vec.iter().map(|x| parse(x)).collect();
-
+fn solution(nodes: &mut Vec<Node>) {
     for counter in 1.. {
         nodes.iter_mut().for_each(|node| node.tick());
 
@@ -59,16 +50,31 @@ fn main() {
             break;
         }
     }
+}
 
+fn visualize(nodes: &Vec<Node>) {
     let min_x = nodes.iter().map(|n| n.x).min().unwrap();
     let min_y = nodes.iter().map(|n| n.y).min().unwrap();
 
     let mut visualized: [[char; 100]; 10] = [['.'; 100]; 10];
-    nodes
-        .iter()
+    nodes.iter()
         .for_each(|n| visualized[(n.y - min_y) as usize][(n.x - min_x) as usize] = '#');
     visualized.iter().for_each(|line| {
         line.iter().for_each(|c| print!("{}", c));
         println!();
     });
+}
+
+fn main() {
+    let path = format!("./input/{}", "day10.txt");
+
+    let mut nodes: Vec<Node> = BufReader::new(File::open(path).unwrap())
+        .lines()
+        .map(|l| l.expect("Could not parse line"))
+        .map(|s| parse_input(&s))
+        .collect();
+
+    solution(&mut nodes);
+
+    visualize(&nodes);
 }
