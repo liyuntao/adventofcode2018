@@ -1,35 +1,30 @@
+use std::collections::VecDeque;
 use std::fs::File;
 use std::io::Read;
 
 fn solution(players: usize, last_marble: u32) -> u32 {
-    let mut cur_center_idx: usize = 0;
     let mut cur_player_id = 0;
     let mut score_counter = vec![0u32; players];
-    let mut chain: Vec<u32> = Vec::with_capacity((last_marble + 1) as usize);
-    chain.push(0);
+    let mut ring_chain: VecDeque<u32> = VecDeque::with_capacity((last_marble + 1) as usize);
+    ring_chain.push_front(0);
 
     for i in 1..=last_marble {
         if i % 23 == 0 {
-            score_counter[cur_player_id] += i;
-            cur_center_idx = {
-                let mut tmp = cur_center_idx as i32;
-                tmp -= 7;
-                if tmp < 0 {
-                    (tmp + chain.len() as i32) as usize
-                } else {
-                    tmp as usize
-                }
-            };
-            score_counter[cur_player_id] += chain[cur_center_idx];
-            chain.remove(cur_center_idx);
+            // rotate of 7 behind + delete
+            (0..7).for_each(|_| {
+                let tmp = ring_chain.pop_back().unwrap();
+                ring_chain.push_front(tmp);
+            });
 
-        //            println!("{:?}", score_counter);
+            score_counter[cur_player_id] += i;
+            score_counter[cur_player_id] += ring_chain.pop_front().unwrap();
         } else {
-            // find target index (right shift then add 1 then insert)
-            cur_center_idx = (cur_center_idx + 1) % chain.len() + 1;
-            chain.insert(cur_center_idx, i);
+            (0..2).for_each(|_| {
+                let tmp = ring_chain.pop_front().unwrap();
+                ring_chain.push_back(tmp);
+            });
+            ring_chain.push_front(i);
         }
-        //        println!("[{}]  {:?}", cur_player_id + 1, chain);
         cur_player_id = (cur_player_id + 1) % players
     }
 
@@ -56,5 +51,6 @@ fn main() {
     let res_q1 = solution(players, last_marble);
     println!("result of q01 is {}", res_q1);
 
-    // TODO q2 may need LinkedList with cursor implemented...
+    let res_q2 = solution(players, last_marble * 100);
+    println!("result of q02 is {}", res_q2);
 }
