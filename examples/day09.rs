@@ -2,10 +2,9 @@ use std::collections::VecDeque;
 use std::fs::File;
 use std::io::Read;
 
-fn solution(players: usize, last_marble: u32) -> u32 {
-    let mut cur_player_id = 0;
-    let mut score_counter = vec![0u32; players];
-    let mut ring_chain: VecDeque<u32> = VecDeque::with_capacity((last_marble + 1) as usize);
+fn solution(players: usize, last_marble: usize) -> usize {
+    let mut score_counter = vec![0usize; players];
+    let mut ring_chain: VecDeque<usize> = VecDeque::with_capacity((last_marble + 1) as usize);
     ring_chain.push_front(0);
 
     for i in 1..=last_marble {
@@ -15,9 +14,7 @@ fn solution(players: usize, last_marble: u32) -> u32 {
                 let tmp = ring_chain.pop_back().unwrap();
                 ring_chain.push_front(tmp);
             });
-
-            score_counter[cur_player_id] += i;
-            score_counter[cur_player_id] += ring_chain.pop_front().unwrap();
+            score_counter[i % players] += i + ring_chain.pop_front().unwrap();
         } else {
             (0..2).for_each(|_| {
                 let tmp = ring_chain.pop_front().unwrap();
@@ -25,7 +22,6 @@ fn solution(players: usize, last_marble: u32) -> u32 {
             });
             ring_chain.push_front(i);
         }
-        cur_player_id = (cur_player_id + 1) % players
     }
 
     score_counter.into_iter().max().unwrap()
@@ -40,7 +36,7 @@ fn main() {
         let vec: Vec<&str> = input.split(' ').collect();
         (
             vec[0].parse::<usize>().unwrap(),
-            vec[6].parse::<u32>().unwrap(),
+            vec[6].parse::<usize>().unwrap(),
         )
     };
 
