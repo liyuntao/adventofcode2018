@@ -2,6 +2,20 @@ use std::collections::VecDeque;
 use std::fs::File;
 use std::io::Read;
 
+fn rotate_backward(deque: &mut VecDeque<usize>, by: usize) {
+    (0..by).for_each(|_| {
+        let tmp = deque.pop_back().unwrap();
+        deque.push_front(tmp);
+    });
+}
+
+fn rotate_forward(deque: &mut VecDeque<usize>, by: usize) {
+    (0..by).for_each(|_| {
+        let tmp = deque.pop_front().unwrap();
+        deque.push_back(tmp);
+    });
+}
+
 fn solution(players: usize, last_marble: usize) -> usize {
     let mut score_counter = vec![0usize; players];
     let mut ring_chain: VecDeque<usize> = VecDeque::with_capacity((last_marble + 1) as usize);
@@ -9,21 +23,13 @@ fn solution(players: usize, last_marble: usize) -> usize {
 
     for i in 1..=last_marble {
         if i % 23 == 0 {
-            // rotate of 7 behind + delete
-            (0..7).for_each(|_| {
-                let tmp = ring_chain.pop_back().unwrap();
-                ring_chain.push_front(tmp);
-            });
+            rotate_backward(&mut ring_chain, 7);
             score_counter[i % players] += i + ring_chain.pop_front().unwrap();
         } else {
-            (0..2).for_each(|_| {
-                let tmp = ring_chain.pop_front().unwrap();
-                ring_chain.push_back(tmp);
-            });
+            rotate_forward(&mut ring_chain, 2);
             ring_chain.push_front(i);
         }
     }
-
     score_counter.into_iter().max().unwrap()
 }
 
