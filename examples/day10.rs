@@ -35,7 +35,6 @@ fn parse(input: &str) -> Node {
     let vx = caps.get(3).unwrap().as_str().parse::<i32>().unwrap();
     let vy = caps.get(4).unwrap().as_str().parse::<i32>().unwrap();
     Node { x, y, vx, vy }
-    //    Node { x:0, y:0, vx:0, vy:0 }
 }
 
 fn main() {
@@ -48,25 +47,19 @@ fn main() {
 
     let mut nodes: Vec<Node> = vec.iter().map(|x| parse(x)).collect();
 
-    let mut is_done = false;
-    let mut counter = 0;
-    while !is_done {
-        counter += 1;
+    for counter in 1.. {
         nodes.iter_mut().for_each(|node| node.tick());
 
-        let mut silly_mark = true;
-        for i in 1..nodes.len() {
-            if (nodes[i].y - nodes[i - 1].y).abs() > 10 {
-                silly_mark = false;
-                break;
-            }
-        }
-        if silly_mark == true {
-            is_done = true;
+        if nodes[..nodes.len() - 1]
+            .iter()
+            .zip(nodes[1..].iter())
+            .all(|pair| (pair.0.y - pair.1.y).abs() <= 10)
+        {
             println!("result of q02 is {}", counter);
+            break;
         }
     }
-    //    nodes.iter().for_each(|n| println!("{:?}", n));
+
     let min_x = nodes.iter().map(|n| n.x).min().unwrap();
     let min_y = nodes.iter().map(|n| n.y).min().unwrap();
 
