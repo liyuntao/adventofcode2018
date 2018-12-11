@@ -19,7 +19,7 @@ fn main() {
     let mut occurred_frequency = HashSet::new();
     let mut cur_frequency: i64 = 0;
 
-    for i in numbers.iter().cycle() {
+    for i in numbers.iter().cycle().scan() {
         cur_frequency += i;
 
         if !occurred_frequency.contains(&cur_frequency) {

@@ -57,7 +57,8 @@ fn visualize(nodes: &Vec<Node>) {
     let min_y = nodes.iter().map(|n| n.y).min().unwrap();
 
     let mut visualized: [[char; 100]; 10] = [['.'; 100]; 10];
-    nodes.iter()
+    nodes
+        .iter()
         .for_each(|n| visualized[(n.y - min_y) as usize][(n.x - min_x) as usize] = '#');
     visualized.iter().for_each(|line| {
         line.iter().for_each(|c| print!("{}", c));
