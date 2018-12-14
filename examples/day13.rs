@@ -126,7 +126,7 @@ fn gen_carts(vec: &mut Vec<Vec<char>>) -> Vec<Cart> {
     for y in 0..vec.len() {
         for x in 0..vec[0].len() {
             let c = vec[y][x];
-            if c == '^' || c == 'v'|| c == '<' || c == '>' {
+            if c == '^' || c == 'v' || c == '<' || c == '>' {
                 carts.push(Cart::new(x, y, c));
             }
         }
