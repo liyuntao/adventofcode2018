@@ -1,14 +1,13 @@
-use std::iter::FromIterator;
+const GEN_SIZE: usize = 50_000_000;
 
-fn main() {
-    let input = 846601;
-    let mut vec: Vec<u8> = Vec::with_capacity(50_000_000);
+fn solution(input: usize) {
+    let mut vec: Vec<u8> = Vec::with_capacity(GEN_SIZE);
     vec.push(3);
     vec.push(7);
     let mut i_a = 0usize;
     let mut i_b = 1usize;
 
-    while vec.len() < 50_000_000 {
+    while vec.len() < GEN_SIZE {
         // make 1 or 2 recipe
         let score = vec[i_a] + vec[i_b];
         if score >= 10 {
@@ -22,21 +21,17 @@ fn main() {
         i_b = (i_b + 1 + vec[i_b] as usize) % vec.len();
     }
 
-    println!(
-        "result of q01 is {}",
-        String::from_iter(
-            vec[input..input + 10]
-                .iter()
-                .map(|&u| char::from(u + '0' as u8))
-                .collect::<Vec<char>>()
-        )
-    );
+    let q1_str: String = vec[input..input + 10]
+        .iter()
+        .map(|&u| char::from(u + '0' as u8))
+        .collect();
+    println!("result of q01 is {}", q1_str);
 
-    let line = String::from_iter(
-        vec.iter()
-            .map(|&u| char::from(u + '0' as u8))
-            .collect::<Vec<char>>(),
-    );
+    let line: String = vec.iter().map(|&u| char::from(u + '0' as u8)).collect();
     let q2 = line.find(&input.to_string()).unwrap();
     println!("result of q02 is {}", q2);
+}
+
+fn main() {
+    solution(846601);
 }
