@@ -74,8 +74,7 @@ fn q2(init_state: &str, rules: &HashMap<String, bool>) -> i64 {
             return cur_sum + (50000000000 - i) * sum_diff;
         }
     }
-
-    -1
+    -1 // not possible for valid input
 }
 
 fn solution(input: Vec<String>, init_state: &str) {
