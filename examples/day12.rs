@@ -28,18 +28,18 @@ fn trigger_gen(state: &Vec<char>, rules: &HashMap<String, bool>) -> Vec<char> {
     next_state
 }
 
-fn q1(init_state: &str, rules: &HashMap<String, bool>) -> i32 {
+fn q1(init_state: &str, gen_times: usize, rules: &HashMap<String, bool>) -> i32 {
     let init_offset = 5i32;
 
     let mut begin_str = ".".repeat(init_offset as usize);
     begin_str.push_str(init_state);
-    begin_str.push_str(&".".repeat(25));
+    begin_str.push_str(&".".repeat(gen_times + 10));
 
     let mut last_vec: Vec<char> = begin_str.chars().collect();
 
-    (1..=20).for_each(|i| {
+    (1..=gen_times).for_each(|i| {
         last_vec = trigger_gen(&last_vec, rules);
-        println!("DEBUG {} \t {}", i, String::from_iter(last_vec.clone()));
+//        println!("DEBUG {} \t {}", i, String::from_iter(last_vec.clone()));
     });
 
     // count sum
@@ -61,6 +61,6 @@ fn main() {
     let rules: HashMap<String, bool> = parse_all_rules(vec);
 
     let init_state = ".#..##..#.....######.....#....####.##.#.#...#...##.#...###..####.##.##.####..######......#..##.##.##";
-    let q1_res = q1(init_state, &rules);
+    let q1_res = q1(init_state, 20, &rules);
     println!("result of q01 is {}", q1_res);
 }
