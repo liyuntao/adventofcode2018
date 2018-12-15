@@ -63,18 +63,18 @@ fn q2(init_state: &str, rules: &HashMap<String, bool>) -> i64 {
     let mut last_vec: Vec<char> = begin_str.chars().collect();
 
     for i in 1.. {
-        let old_str = String::from_iter(last_vec.clone());
+        let cur_gen_visualized = String::from_iter(last_vec.clone());
         last_vec = trigger_gen(&last_vec, rules);
-        let new_str = String::from_iter(last_vec.clone());
+        let next_gen_visualized = String::from_iter(last_vec.clone());
 
-        if old_str.trim() == new_str.trim() {
+        if cur_gen_visualized.trim() == next_gen_visualized.trim() {
             let cur_sum = count_sum(&last_vec);
             let next_sum = count_sum(&trigger_gen(&last_vec, rules));
             let sum_diff = next_sum - cur_sum;
             return cur_sum + (50000000000 - i) * sum_diff;
         }
     }
-    -1 // not possible for valid input
+    -1 // unreachable for valid aoc input
 }
 
 fn solution(input: Vec<String>, init_state: &str) {
