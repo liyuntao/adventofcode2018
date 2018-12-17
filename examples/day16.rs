@@ -116,22 +116,22 @@ fn main() {
         }
     }
     // deduction & normalize
-    let opcode_mapping = opcode_mapping
+    let mapping = opcode_mapping
         .into_iter()
         .map(|set| set.into_iter().next().unwrap())
         .collect::<Vec<usize>>();
-    println!("DEBUG after deduction {:?}", opcode_mapping);
+    println!("DEBUG after deduction {:?}", mapping);
 
     // parsing q2 input
     let path = format!("./input/{}", "day16_q2.txt");
-    let instructions: Vec<[usize; 4]> = BufReader::new(File::open(path).unwrap())
+    let cmds: Vec<[usize; 4]> = BufReader::new(File::open(path).unwrap())
         .lines()
         .map(|l| l.expect("Could not parse line"))
         .map(|line| parse_line_num(&line))
         .collect();
 
-    let register = instructions.iter().fold([0; 4], |acc, ins| {
-        execute(&acc, ins, opcode_mapping[ins[0]])
-    });
+    let register = cmds
+        .iter()
+        .fold([0; 4], |acc, ins| execute(&acc, ins, mapping[ins[0]]));
     println!("result of q02 is {}", register[0]);
 }
