@@ -47,7 +47,7 @@ fn execute(registers: &[usize; 4], cmd: (usize, usize, usize, usize), index: usi
 }
 
 fn solution() {
-    let path = format!("./input/{}", "day15_q1.txt");
+    let path = format!("./input/{}", "day16_q1.txt");
 
     let vec: Vec<String> = BufReader::new(File::open(path).unwrap())
         .lines()
@@ -144,7 +144,7 @@ fn solution() {
     println!("DEBUG {:?}", opcode_mapping);
 
     // parsing q2 input
-    let path = format!("./input/{}", "day15_q2.txt");
+    let path = format!("./input/{}", "day16_q2.txt");
     let instructions: Vec<Vec<usize>> = BufReader::new(File::open(path).unwrap())
         .lines()
         .map(|l| l.expect("Could not parse line"))
