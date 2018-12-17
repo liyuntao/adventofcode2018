@@ -23,7 +23,6 @@ fn execute(registers: &[usize; 4], cmd: (usize, usize, usize, usize), index: usi
     let mut gen: [usize; 4] = Default::default();
     gen.copy_from_slice(registers);
     let be = registers;
-
     match index {
         0 => gen[cmd.3] = be[cmd.1] + be[cmd.2],
         1 => gen[cmd.3] = be[cmd.1] + cmd.2,
@@ -46,9 +45,8 @@ fn execute(registers: &[usize; 4], cmd: (usize, usize, usize, usize), index: usi
     gen
 }
 
-fn solution() {
+fn main() {
     let path = format!("./input/{}", "day16_q1.txt");
-
     let vec: Vec<String> = BufReader::new(File::open(path).unwrap())
         .lines()
         .map(|l| l.expect("Could not parse line"))
@@ -116,32 +114,27 @@ fn solution() {
                 .collect::<HashSet<usize>>();
         }
     });
-    println!("DEBUG {:?}", opcode_mapping);
+    println!("DEBUG before deduction {:?}", opcode_mapping);
 
     // repeat deduction until every Set.len() == 1
     let mut handled: HashSet<usize> = HashSet::new();
     while opcode_mapping.iter().any(|set| set.len() != 1) {
-        for set in opcode_mapping.iter() {
-            if set.len() == 1 {
-                handled.insert(*set.iter().next().unwrap());
-            }
-        }
         for set in opcode_mapping.iter_mut() {
             if set.len() > 1 {
                 handled.iter().for_each(|num| {
                     set.remove(&num);
                 })
+            } else {
+                handled.insert(*set.iter().next().unwrap());
             }
         }
     }
-    println!("DEBUG {:?}", opcode_mapping);
-
-    // normalize
+    // deduction & normalize
     let opcode_mapping = opcode_mapping
         .into_iter()
         .map(|set| set.into_iter().next().unwrap())
         .collect::<Vec<usize>>();
-    println!("DEBUG {:?}", opcode_mapping);
+    println!("DEBUG after deduction {:?}", opcode_mapping);
 
     // parsing q2 input
     let path = format!("./input/{}", "day16_q2.txt");
@@ -164,8 +157,4 @@ fn solution() {
         );
     }
     println!("result of q02 is {}", register[0]);
-}
-
-fn main() {
-    solution();
 }
