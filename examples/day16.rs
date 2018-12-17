@@ -32,30 +32,29 @@ fn parse_line_num(line: &str) -> [usize; 4] {
     [u1, u2, u3, u4]
 }
 
-fn execute(registers: &[usize; 4], cmd: &[usize; 4], index: usize) -> [usize; 4] {
-    let mut gen: [usize; 4] = Default::default();
-    gen.copy_from_slice(registers);
-    let be = registers;
+fn execute(ori: &[usize; 4], cmd: &[usize; 4], index: usize) -> [usize; 4] {
+    let mut after: [usize; 4] = Default::default();
+    after.copy_from_slice(ori);
     match index {
-        0 => gen[cmd[3]] = be[cmd[1]] + be[cmd[2]],
-        1 => gen[cmd[3]] = be[cmd[1]] + cmd[2],
-        2 => gen[cmd[3]] = be[cmd[1]] * be[cmd[2]],
-        3 => gen[cmd[3]] = be[cmd[1]] * cmd[2],
-        4 => gen[cmd[3]] = be[cmd[1]] & be[cmd[2]],
-        5 => gen[cmd[3]] = be[cmd[1]] & cmd[2],
-        6 => gen[cmd[3]] = be[cmd[1]] | be[cmd[2]],
-        7 => gen[cmd[3]] = be[cmd[1]] | cmd[2],
-        8 => gen[cmd[3]] = be[cmd[1]],
-        9 => gen[cmd[3]] = cmd[1],
-        10 => gen[cmd[3]] = if cmd[1] > be[cmd[2]] { 1 } else { 0 },
-        11 => gen[cmd[3]] = if be[cmd[1]] > cmd[2] { 1 } else { 0 },
-        12 => gen[cmd[3]] = if be[cmd[1]] > be[cmd[2]] { 1 } else { 0 },
-        13 => gen[cmd[3]] = if cmd[1] == be[cmd[2]] { 1 } else { 0 },
-        14 => gen[cmd[3]] = if be[cmd[1]] == cmd[2] { 1 } else { 0 },
-        15 => gen[cmd[3]] = if be[cmd[1]] == be[cmd[2]] { 1 } else { 0 },
+        0 => after[cmd[3]] = ori[cmd[1]] + ori[cmd[2]],
+        1 => after[cmd[3]] = ori[cmd[1]] + cmd[2],
+        2 => after[cmd[3]] = ori[cmd[1]] * ori[cmd[2]],
+        3 => after[cmd[3]] = ori[cmd[1]] * cmd[2],
+        4 => after[cmd[3]] = ori[cmd[1]] & ori[cmd[2]],
+        5 => after[cmd[3]] = ori[cmd[1]] & cmd[2],
+        6 => after[cmd[3]] = ori[cmd[1]] | ori[cmd[2]],
+        7 => after[cmd[3]] = ori[cmd[1]] | cmd[2],
+        8 => after[cmd[3]] = ori[cmd[1]],
+        9 => after[cmd[3]] = cmd[1],
+        10 => after[cmd[3]] = if cmd[1] > ori[cmd[2]] { 1 } else { 0 },
+        11 => after[cmd[3]] = if ori[cmd[1]] > cmd[2] { 1 } else { 0 },
+        12 => after[cmd[3]] = if ori[cmd[1]] > ori[cmd[2]] { 1 } else { 0 },
+        13 => after[cmd[3]] = if cmd[1] == ori[cmd[2]] { 1 } else { 0 },
+        14 => after[cmd[3]] = if ori[cmd[1]] == cmd[2] { 1 } else { 0 },
+        15 => after[cmd[3]] = if ori[cmd[1]] == ori[cmd[2]] { 1 } else { 0 },
         _ => {}
     };
-    gen
+    after
 }
 
 fn main() {
