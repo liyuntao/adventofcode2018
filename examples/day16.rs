@@ -76,13 +76,7 @@ fn main() {
 
     let q1 = asserts
         .iter()
-        .map(|ass| {
-            (0..=15)
-                .map(|id| ass.try_assert(id))
-                .filter(|&b| b)
-                .collect::<Vec<bool>>()
-        })
-        .filter(|ref res_vec| res_vec.len() >= 3)
+        .filter(|ass| (0..=15).map(|id| ass.try_assert(id)).filter(|&b| b).count() >= 3)
         .count();
     println!("result of q01 is {}", q1);
 
