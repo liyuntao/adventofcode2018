@@ -102,10 +102,22 @@ fn draw(grid: &Vec<Vec<char>>) {
 
 fn main() {
     let path = format!("./input/{}", "day18.txt");
+
+    // q1
     let mut grid = parse_all(path);
-    for _i in 0..10 {
+    for _i in 1..=10 {
         grid = tick(&grid);
     }
-    //    draw(&grid)
+    //        draw(&grid)
     println!("result of q01 is {}", count(&grid));
+
+    // q2
+    for i in 11..=1028 {
+        grid = tick(&grid);
+        if i > 970 {
+            // value repeats every 28 iterations
+            // search it by yourself
+            println!("{}  {}", count(&grid), i);
+        }
+    }
 }
