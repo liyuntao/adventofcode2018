@@ -42,9 +42,35 @@ fn main() {
         .map(|line| parse_line(line))
         .collect();
 
+    // q1
     let mut register = [0usize; 6];
     while register[p_idx] < instructions.len() {
         tick(&mut register, p_idx, &instructions);
     }
     println!("result of q01 is {}", register[0]);
+
+
+
+
+    // test q2
+//    let mut register = [1,0,0,0,0,0];
+//    let mut counter: usize = 0;
+//    for i in 1..100 {
+//        let cmd = &instructions[register[p_idx]];
+//        tick(&mut register, p_idx, &instructions);
+//        println!("{:04} {:?} {:?}", counter, cmd, register);
+//        counter += 1;
+//    }
+
+
+    let mut a = 0;
+    let mut b = 1;
+    while b <= 10551428 {
+        if 10551428 % b == 0 {
+            a += b;
+        }
+        b += 1;
+    }
+    println!("result of q02 is {}", a);
+
 }
