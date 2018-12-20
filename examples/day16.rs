@@ -52,7 +52,7 @@ fn execute(ori: &[usize; 4], cmd: &[usize; 4], index: usize) -> [usize; 4] {
         13 => after[cmd[3]] = if cmd[1] == ori[cmd[2]] { 1 } else { 0 },
         14 => after[cmd[3]] = if ori[cmd[1]] == cmd[2] { 1 } else { 0 },
         15 => after[cmd[3]] = if ori[cmd[1]] == ori[cmd[2]] { 1 } else { 0 },
-        _ => unreachable!()
+        _ => unreachable!(),
     };
     after
 }
