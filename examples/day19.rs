@@ -49,19 +49,15 @@ fn main() {
     }
     println!("result of q01 is {}", register[0]);
 
-
-
-
     // test q2
-//    let mut register = [1,0,0,0,0,0];
-//    let mut counter: usize = 0;
-//    for i in 1..100 {
-//        let cmd = &instructions[register[p_idx]];
-//        tick(&mut register, p_idx, &instructions);
-//        println!("{:04} {:?} {:?}", counter, cmd, register);
-//        counter += 1;
-//    }
-
+    //    let mut register = [1,0,0,0,0,0];
+    //    let mut counter: usize = 0;
+    //    for i in 1..100 {
+    //        let cmd = &instructions[register[p_idx]];
+    //        tick(&mut register, p_idx, &instructions);
+    //        println!("{:04} {:?} {:?}", counter, cmd, register);
+    //        counter += 1;
+    //    }
 
     let mut a = 0;
     let mut b = 1;
@@ -72,5 +68,4 @@ fn main() {
         b += 1;
     }
     println!("result of q02 is {}", a);
-
 }
