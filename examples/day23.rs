@@ -30,7 +30,7 @@ fn parse_input(input: &str) -> Bot {
     Bot { x, y, z, r }
 }
 
-fn solution(bots: &mut Vec<Bot>) {
+fn q1(bots: &mut Vec<Bot>) {
     let largest_r = bots.iter().map(|b| b.r).max().unwrap();
     let largest_r_bot_idx = bots.iter().position(|b| b.r == largest_r).unwrap();
     let mut q1_counter = 0;
@@ -46,20 +46,6 @@ fn solution(bots: &mut Vec<Bot>) {
     println!("result of q01 is {}", q1_counter);
 }
 
-//fn visualize(nodes: &Vec<Bot>) {
-//    let min_x = nodes.iter().map(|n| n.x).min().unwrap();
-//    let min_y = nodes.iter().map(|n| n.y).min().unwrap();
-//
-//    let mut visualized: [[char; 100]; 10] = [['.'; 100]; 10];
-//    nodes
-//        .iter()
-//        .for_each(|n| visualized[(n.y - min_y) as usize][(n.x - min_x) as usize] = '#');
-//    visualized.iter().for_each(|line| {
-//        line.iter().for_each(|c| print!("{}", c));
-//        println!();
-//    });
-//}
-
 fn main() {
     let path = format!("./input/{}", "day23.txt");
 
@@ -69,5 +55,5 @@ fn main() {
         .map(|s| parse_input(&s))
         .collect();
 
-    solution(&mut bots);
+    q1(&mut bots);
 }
