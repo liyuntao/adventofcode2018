@@ -103,8 +103,11 @@ fn q2(grid: &Vec<Vec<Unit>>, tar_x: i32, tar_y: i32) {
         for t in &[(0, -1), (0, 1), (-1, 0), (1, 0)] {
             let new_i = i + t.0;
             let new_j = j + t.1;
-            if new_i < 0 || new_j < 0
-                || new_j as usize >= grid.len() || new_i as usize >= grid[0].len() {
+            if new_i < 0
+                || new_j < 0
+                || new_j as usize >= grid.len()
+                || new_i as usize >= grid[0].len()
+            {
                 continue;
             }
             if grid[new_j as usize][new_i as usize].r_type == tool {
@@ -122,7 +125,7 @@ fn main() {
 
     // q1
     let grid = gen_grid(14, 760, 7863);
-//    draw(&grid);
+    //    draw(&grid);
     println!("result of q01 is {}", count(&grid));
 
     // q2
