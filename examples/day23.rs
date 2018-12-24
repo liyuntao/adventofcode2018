@@ -52,8 +52,11 @@ fn z3_abs<'ctx>(n: &Ast<'ctx>, ctx: &'ctx Context) -> Ast<'ctx> {
     n.ge(&ctx.from_i64(0)).ite(n, &n.minus())
 }
 
-fn z3_dist<'ctx>(t1: (&Ast<'ctx>, &Ast<'ctx>, &Ast<'ctx>),
-                 t2: (i64, i64, i64), ctx: &'ctx Context) -> Ast<'ctx> {
+fn z3_dist<'ctx>(
+    t1: (&Ast<'ctx>, &Ast<'ctx>, &Ast<'ctx>),
+    t2: (i64, i64, i64),
+    ctx: &'ctx Context,
+) -> Ast<'ctx> {
     let tmp1 = &z3_abs(&t1.0.sub(&[&ctx.from_i64(t2.0)]), &ctx);
     let tmp2 = &z3_abs(&t1.1.sub(&[&ctx.from_i64(t2.1)]), &ctx);
     let tmp3 = &z3_abs(&t1.2.sub(&[&ctx.from_i64(t2.2)]), &ctx);
@@ -70,7 +73,7 @@ fn q2(bots: &Vec<Bot>) {
     let mut cost_expr = x.mul(&[&ctx.from_i64(0)]);
 
     bots.iter().for_each(|b| {
-        let md_ast = z3_dist((x,y,z), (b.x, b.y, b.z), &ctx);
+        let md_ast = z3_dist((x, y, z), (b.x, b.y, b.z), &ctx);
         let if_ast = &md_ast
             .le(&ctx.from_i64(b.r))
             .ite(&ctx.from_i64(1), &ctx.from_i64(0));
@@ -78,14 +81,17 @@ fn q2(bots: &Vec<Bot>) {
     });
     let opt = Optimize::new(&ctx);
     opt.maximize(&cost_expr);
-    opt.minimize(&z3_dist((x,y,z), (0,0,0), &ctx));
+    opt.minimize(&z3_dist((x, y, z), (0, 0, 0), &ctx));
     println!("{}", opt.check());
     let model = opt.get_model();
     let x_val = model.eval(&x).unwrap().as_i64().unwrap();
     let y_val = model.eval(&y).unwrap().as_i64().unwrap();
     let z_val = model.eval(&z).unwrap().as_i64().unwrap();
     println!("{} {} {}", x_val, y_val, z_val);
-    println!("result of q02 is {}", x_val.abs() + y_val.abs() + z_val.abs());
+    println!(
+        "result of q02 is {}",
+        x_val.abs() + y_val.abs() + z_val.abs()
+    );
 }
 
 fn main() {
